@@ -1,4 +1,4 @@
-import {RECEIVE_USERS} from '../actions/users'
+import {RECEIVE_USERS, ADD_ANSWER_TO_USERS, ADD_QUESTION_TO_USERS} from '../actions/users'
 
 export default function users(state = {}, action) {
 
@@ -9,7 +9,26 @@ export default function users(state = {}, action) {
                 ...state,
                 ...action.users,
             }
-            default:
-            return state
+        case ADD_ANSWER_TO_USERS:
+            return {
+                ...state,
+                [action.userid]: {
+                    ...state[action.userid],
+                    answers: {
+                        ...state[action.userid].answers,
+                        [action.questionid]: action.option
+                    }
+                }
+            }
+        case ADD_QUESTION_TO_USERS:
+            return {
+                ...state,
+                [action.userid]: {
+                    ...state[action.userid],
+                    questions: state[action.userid].questions.concat([action.questionid])
+                }
+            }
+        default:
+            return state            
     }
 }            

@@ -9,11 +9,13 @@ import store from '../store'
 import { receiveUsers } from '../actions/users'
 import { receiveQuestions } from '../actions/questions'
 import LoadingBar from 'react-redux-loading'
+import { initializeCatalog } from '../actions/catalog';
 
 class Login extends Component {
   state = {
     redirectToReferrer: false,
-    selectOptions: null
+    selectOptions: null,
+    userselected: false,
   }
   componentDidMount(){
     getInitialData().then(({users,questions}) => {
@@ -31,7 +33,8 @@ class Login extends Component {
   handleChange = (e) => {
     console.log(e.value)
     this.setState(() => ({
-      userid: e.value
+      userid: e.value,
+      userselected: true,
     }))
   }  
 
@@ -52,8 +55,9 @@ class Login extends Component {
         store.dispatch(setAuthedUser(AUTHED_ID))
         store.dispatch(receiveUsers(users))
         store.dispatch(receiveQuestions(questions))
-        store.dispatch(hideLoading())
+        store.dispatch(initializeCatalog(questions, AUTHED_ID))
       }
+      store.dispatch(hideLoading())      
       // log in via redirect
       this.setState(() => ({
         redirectToReferrer: referrer
@@ -80,7 +84,7 @@ class Login extends Component {
             selectOptions !== null &&
             <Select options={selectOptions} onChange={this.handleChange.bind(this)} />
           }
-          <button className="btn" onClick={this.login}>Log in</button>
+          <button className="btn" onClick={this.login} disabled={!this.state.userselected}>Log in</button>
         </div>
       </div>         
     )

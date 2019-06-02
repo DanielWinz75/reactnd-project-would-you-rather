@@ -169,3 +169,8 @@ h4 {
   font-size: 18px;
   text-decoration: underline;
 }
+
+.statisticinfo {
+  font-style: italic;
+  color: darkblue;
+}

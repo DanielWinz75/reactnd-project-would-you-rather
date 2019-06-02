@@ -4,12 +4,8 @@ let users = {
       name: 'Daniel Winz',
       avatarURL: 'https://findicons.com/files/icons/1072/face_avatars/300/a03.png',
       answers: {
-        "8xf0y6ziyjabvozdd253nd": 'optionOne',
-        "6ni6ok3ym7mf1p33lnez": 'optionTwo',
-        "vthrdm985a262al8qx3do": 'optionOne',
-        "xj352vofupe1dqz9emx13r": 'optionTwo'
       },
-      questions: ['8xf0y6ziyjabvozdd253nd', 'am8ehyc8byjqgar0jgpub9']
+      questions: []
     },  
     sarahedo: {
       id: 'sarahedo',

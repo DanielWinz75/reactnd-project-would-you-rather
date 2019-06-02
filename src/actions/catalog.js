@@ -47,4 +47,29 @@ export function toggleQuestions(displayType) {
     }
 }
 
+export function initializeCatalog(questions, userid) {
+    return (dispatch) => {
+        const openQuestions = Object.keys(questions)
+          .filter((id) => {
+            const iOne = questions[id].optionOne.votes.indexOf(userid)
+            const iTwo = questions[id].optionTwo.votes.indexOf(userid)
+            if ( iOne > -1 || iTwo > -1 ) {
+              return false
+            }
+            return true
+          })
 
+        const closedQuestions = Object.keys(questions)
+          .filter((id) => {
+            const iOne = questions[id].optionOne.votes.indexOf(userid)
+            const iTwo = questions[id].optionTwo.votes.indexOf(userid)
+            if ( iOne > -1 || iTwo > -1 ) {
+              return true
+            }
+            return false
+          })
+
+          dispatch(initOpenQuestionArray(openQuestions))
+          dispatch(initClosedQuestionArray(closedQuestions))
+    }
+  }

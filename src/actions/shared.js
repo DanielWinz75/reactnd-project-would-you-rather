@@ -1,19 +1,9 @@
 import { getInitialData } from '../utils/api'
-import { receiveUsers } from '../actions/users'
-import { receiveQuestions } from '../actions/questions'
+import { receiveUsers, addAnswerToUsers, addQuestionIdToUsers } from './users'
+import { receiveQuestions, addQuestion, voteForQuestion } from './questions'
 import { showLoading, hideLoading } from 'react-redux-loading'
-import { initOpenQuestionArray, initClosedQuestionArray } from '../actions/catalog';
-
-// export function preLoadData () {
-//   return (dispatch) => {
-//     dispatch(showLoading())
-//     return getInitialData()
-//       .then(({ users }) => {
-//         dispatch(receiveUsers(users))      
-//         dispatch(hideLoading())
-//       })
-//   }
-// }
+import { initOpenQuestionArray, initClosedQuestionArray, addOpenQuestion } from './catalog';
+import { saveQuestion, saveQuestionAnswer } from '../utils/api'
 
 export function handleInitialData (AUTHED_ID) {
   return (dispatch) => {
@@ -47,5 +37,37 @@ export function handleInitialData (AUTHED_ID) {
         dispatch(initClosedQuestionArray(closedQuestions))
         dispatch(hideLoading())
       })
+  }
+}
+
+export function addNewQuestion(optionOneText, optionTwoText) {
+  return (dispatch, getState) => {
+    const { authedUser } = getState()
+    dispatch(showLoading())
+
+    return saveQuestion({
+      optionOneText,
+      optionTwoText,  
+      author: authedUser,
+    })
+      .then((question) => dispatch(addQuestion(question)))
+      .then((question) => dispatch(addOpenQuestion(question.id)))
+      .then((question) => dispatch(addQuestionIdToUsers(authedUser,question.openQuestionId)))
+      .then(() => dispatch(hideLoading()))
+  }
+}
+
+export function addQuestionAnswer({authedUser, qid, option}) {
+  return (dispatch) => {
+    dispatch(showLoading())
+
+    return saveQuestionAnswer({
+      authedUser,
+      qid,
+      option,
+    })
+      .then((params) => dispatch(voteForQuestion(params)))
+      .then(() => dispatch(addAnswerToUsers(authedUser, qid, option)))
+      .then(() => dispatch(hideLoading()))
   }
 }

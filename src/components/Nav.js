@@ -18,7 +18,10 @@ class Nav extends Component {
             </li>
             <li>
               <NavLink to={'/app/new'}>New Question</NavLink>
-            </li>            
+            </li>          
+            <li>
+              <NavLink to={'/app/leaderboard'}>Leaderboard</NavLink>
+            </li>                  
           </ul>
           <ul className="horizontal">
             <li>
