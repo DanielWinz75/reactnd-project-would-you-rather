@@ -13,7 +13,7 @@ class Votation extends Component {
         dispatch(addQuestionAnswer({authedUser,qid: id,option: optionNr}))
         dispatch(addClosedQuestion(id))
         dispatch(removeOpenQuestion(id))
-        dispatch(push('/app/dashboard'))
+        dispatch(push(`/app/votation/${id}`))
     }
     render() {
         const { 
@@ -37,7 +37,7 @@ class Votation extends Component {
                         <div>
                             {alreadyAnswered ? 
                                 (<span>
-                                    You already answered {
+                                    You answered {
                                         yourQuestion ?
                                         (<span>your </span>) :
                                         (<span>{username}'s <img src={avatar} className="avatar-small" alt="" /></span>)
@@ -56,7 +56,7 @@ class Votation extends Component {
                                         disabled={alreadyAnswered} />
                                     {optionOne.text}
                                     {alreadyAnswered && 
-                                        (<span className='statisticinfo'> - {amountOneVotes} user{amountOneVotes>1?(<span>s</span>):(<span></span>)} out of {amountOfUsers} voted for this answer</span>)
+                                        (<span className='statisticinfo'> - Info: {amountOneVotes} user{amountOneVotes>1?(<span>s</span>):(<span></span>)} out of {amountOfUsers} voted for this answer</span>)
                                     }
                                 </div>
                                 <div>
@@ -66,7 +66,7 @@ class Votation extends Component {
                                         disabled={alreadyAnswered} />
                                     {optionTwo.text}
                                     {alreadyAnswered && 
-                                        (<span className='statisticinfo'> - {amountTwoVotes} user{amountTwoVotes>1?(<span>s</span>):(<span></span>)} out of {amountOfUsers} voted for this answer</span>)
+                                        (<span className='statisticinfo'> - Info: {amountTwoVotes} user{amountTwoVotes>1?(<span>s</span>):(<span></span>)} out of {amountOfUsers} voted for this answer</span>)
                                     }
                                 </div>
                             </div>                            
