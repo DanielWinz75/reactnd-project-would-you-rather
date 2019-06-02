@@ -9,6 +9,9 @@ import AuthorizedPaths from './AuthorizedPaths'
 class App extends Component {
   render() {
     return (
+      // routing inspired by
+      // https://tylermcginnis.com/react-router-protected-routes-authentication/
+      // https://codepen.io/bradwestfall/project/editor/XWNWge?preview_height=50&open_file=src/app.js
       <ConnectedRouter history={this.props.history}>
           <div>
             <Switch>
