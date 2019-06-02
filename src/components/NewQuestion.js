@@ -44,7 +44,7 @@ class NewQuestion extends Component {
  
       return(
         <div>
-          <h3 className='center'>Create a new "Would you reather"</h3>
+          <h3 className='center'>Would you reather</h3>
           <form className='new-question' onSubmit={this.handleSubmit}>
 
             <textarea
