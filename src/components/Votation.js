@@ -90,7 +90,7 @@ function mapStateToProps(state, props) {
         selectedOption = 'optionTwo'
     }
 
-    const amountOfUsers = Object.keys(users).length
+    const amountOfUsers = Object.keys(question.optionOne.votes).length + Object.keys(question.optionTwo.votes).length
     const amountOneVotes = Object.keys(question.optionOne.votes).length
     const amountTwoVotes = Object.keys(question.optionTwo.votes).length
     const alreadyAnswered = selectedOption !== null
