@@ -24,7 +24,9 @@ class Votation extends Component {
             alreadyAnswered, 
             amountOfUsers,
             amountOneVotes,
+            percentageOneVotes,
             amountTwoVotes,
+            percentageTwoVotes,
             yourQuestion,
         } = this.props
         const { id, optionOne, optionTwo } = question
@@ -50,24 +52,34 @@ class Votation extends Component {
                             }
                             <div>
                                 <div >
-                                    <input type="radio" value="optionOne" name={id}
-                                        checked={selectedOption === 'optionOne'}
-                                        onChange={event => this.handleToggleOption(event)}
-                                        disabled={alreadyAnswered} />
-                                    {optionOne.text}
-                                    {alreadyAnswered && 
-                                        (<span className='statisticinfo'> - Info: {amountOneVotes} user{amountOneVotes>1?(<span>s</span>):(<span></span>)} out of {amountOfUsers} voted for this answer</span>)
-                                    }
+                                    {alreadyAnswered ?
+                                        (
+                                        <div>
+                                            {selectedOption === 'optionOne' && (<span className="yourvoteinfo">your vote </span>)}<span>"{optionOne.text}" </span><br />
+                                            <span className='statisticinfo'>Info: {percentageOneVotes}&#37; - {amountOneVotes} user{amountOneVotes>1?(<span>s</span>):(<span></span>)} out of {amountOfUsers} voted for this answer</span><br /><br />
+                                        </div>
+                                        ) : (
+                                        <div>
+                                            <input type="radio" value="optionOne" name={id}
+                                                onChange={event => this.handleToggleOption(event)}/>
+                                            <span>{optionOne.text}</span>
+                                        </div>
+                                        )}
                                 </div>
                                 <div>
-                                    <input type="radio" value="optionTwo" name={id}
-                                        checked={selectedOption === 'optionTwo'}
-                                        onChange={event => this.handleToggleOption(event)}
-                                        disabled={alreadyAnswered} />
-                                    {optionTwo.text}
-                                    {alreadyAnswered && 
-                                        (<span className='statisticinfo'> - Info: {amountTwoVotes} user{amountTwoVotes>1?(<span>s</span>):(<span></span>)} out of {amountOfUsers} voted for this answer</span>)
-                                    }
+                                    {alreadyAnswered ?      
+                                        (
+                                        <div>
+                                            {selectedOption === 'optionTwo' && (<span className="yourvoteinfo">your vote </span>)}<span>"{optionTwo.text}" </span><br />
+                                            <span className='statisticinfo'>Info: {percentageTwoVotes}&#37; - {amountTwoVotes} user{amountTwoVotes>1?(<span>s</span>):(<span></span>)} out of {amountOfUsers} voted for this answer</span>
+                                        </div>
+                                        ) : (
+                                        <div>
+                                            <input type="radio" value="optionTwo" name={id}
+                                                onChange={event => this.handleToggleOption(event)}/>
+                                            <span>{optionTwo.text}</span>
+                                        </div>
+                                        )}
                                 </div>
                             </div>                            
                         </div>
@@ -93,6 +105,10 @@ function mapStateToProps(state, props) {
     const amountOfUsers = Object.keys(question.optionOne.votes).length + Object.keys(question.optionTwo.votes).length
     const amountOneVotes = Object.keys(question.optionOne.votes).length
     const amountTwoVotes = Object.keys(question.optionTwo.votes).length
+    let percentageOneVotes = amountOneVotes*100 / amountOfUsers
+    percentageOneVotes = percentageOneVotes.toFixed(2)
+    let percentageTwoVotes = amountTwoVotes*100 / amountOfUsers
+    percentageTwoVotes = percentageTwoVotes.toFixed(2)
     const alreadyAnswered = selectedOption !== null
     const username = users[question.author].name
     const yourQuestion = users[authedUser] === users[question.author] ? true : false
@@ -108,7 +124,9 @@ function mapStateToProps(state, props) {
         avatar,
         amountOfUsers,
         amountOneVotes,
+        percentageOneVotes,
         amountTwoVotes,
+        percentageTwoVotes,
         yourQuestion,
     }
 }

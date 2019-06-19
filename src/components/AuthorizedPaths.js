@@ -29,9 +29,9 @@ class AuthorizedPaths extends Component {
           <LoadingBar />
           <Nav />
           <Switch>
+            <Route path="/add" exact component={NewQuestion} />
             <Route path={`${match.path}`} exact render={() => (<Redirect to={`${match.url}/dashboard`} />)} />
             <Route path={`${match.path}/dashboard`} component={Dashboard} />
-            <Route path={`${match.path}/new`} component={NewQuestion} />
             <Route path={`${match.path}/leaderboard`} component={Leaderboard} />
             <Route path={`${match.path}/votation/:question_id`} render={(props) => {
                 const qexists = questions[questionid]

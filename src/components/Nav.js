@@ -17,7 +17,7 @@ class Nav extends Component {
               <NavLink to={'/app/dashboard'}>Dashboard</NavLink>
             </li>
             <li>
-              <NavLink to={'/app/new'}>New Question</NavLink>
+              <NavLink to={'/add'}>New Question</NavLink>
             </li>          
             <li>
               <NavLink to={'/app/leaderboard'}>Leaderboard</NavLink>
